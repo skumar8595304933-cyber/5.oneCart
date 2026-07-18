@@ -3,6 +3,12 @@ import validator from "validator"
 import bcrypt from "bcryptjs"
 import { genToken, genToken1 } from "../config/token.js";
 
+const CLEAR_COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: true,
+  sameSite: "None",
+  path: "/"
+}; 
 
 export const registration = async (req,res) => {
   try {
@@ -65,8 +71,10 @@ export const login = async (req,res) => {
 }
 export const logOut = async (req,res) => {
 try {
-    res.clearCookie("token")
+   res.clearCookie("token", CLEAR_COOKIE_OPTIONS);
+   res.cookie("token", "", { ...CLEAR_COOKIE_OPTIONS, expires: new Date(0) });
     return res.status(200).json({message:"logOut successful"})
+   
 } catch (error) {
     console.log("logOut error")
     return res.status(500).json({message:`LogOut error ${error}`})
