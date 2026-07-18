@@ -27,12 +27,12 @@ app.use("/api/product",productRoutes)
 app.use("/api/cart",cartRoutes)
 app.use("/api/order",orderRoutes)
 
-app.get("/",(req,res)=>{
- red.json({
-  status:true,
-  meassage:"all ok"
- })
- )};
+app.get("/", (req, res) => {
+  res.json({
+    status: true,
+    message: "All OK"
+  });
+});
 
 
 app.listen(port,()=>{
